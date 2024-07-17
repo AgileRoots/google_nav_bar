@@ -101,10 +101,18 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
       expandController.forward();
 
     Widget icon = widget.leading ??
-        Container(
-            child: widget.icon,
-            color: _colorTweenAnimation.value,
-            width: widget.iconSize);
+        AnimatedBuilder(
+          animation: _colorTweenAnimation,
+          builder: (context, child) {
+            return IconTheme(
+              data: IconThemeData(
+                color: _colorTweenAnimation.value,
+                size: widget.iconSize,
+              ),
+              child: widget.icon!,
+            );
+          },
+        );
 
     return Material(
       type: MaterialType.transparency,
